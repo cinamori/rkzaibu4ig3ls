@@ -6,7 +6,7 @@
 			"value": "rkzaibu4ig3ls"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
-			"value": "https://cistorage01.dfs.core.windows.net/"
+			"value": "https://test.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"value": ""
