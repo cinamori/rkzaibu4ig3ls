@@ -1,0 +1,15 @@
+{
+	"name": "rkzaibu4ig3ls",
+	"location": "japaneast",
+	"identity": {
+		"type": "SystemAssigned,UserAssigned",
+		"principalId": "6095c837-86b9-4965-b70b-d5deee4ad3ef",
+		"tenantId": "16b3c013-d300-468d-ac64-7eda0820b6d3",
+		"userAssignedIdentities": {
+			"/subscriptions/fb0d0c58-ffd3-4bb5-9349-fc515e660775/resourcegroups/adfrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/adf-user-mangedid-demo2": {
+				"clientId": "24e8ea4a-00b4-4147-a593-0e532f30fff4",
+				"principalId": "1c8409b1-a929-45c4-b393-fa6339d92ff1"
+			}
+		}
+	}
+}
