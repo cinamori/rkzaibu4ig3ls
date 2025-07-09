@@ -9,7 +9,16 @@
 			"value": "https://cistorage01.dfs.core.windows.net/"
 		},
 		"AzureIR_properties_typeProperties_computeProperties_irLocation": {
-			"value": "AutoResolve"
+			"value": ""
+		},
+		"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType": {
+			"value": ""
+		},
+		"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount": {
+			"value": ""
+		},
+		"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
+			"value": ""
 		},
 		"containerUri": {
 			"value": ""

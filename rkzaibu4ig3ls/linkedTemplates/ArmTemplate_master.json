@@ -12,8 +12,16 @@
 			"defaultValue": "https://cistorage01.dfs.core.windows.net/"
 		},
 		"AzureIR_properties_typeProperties_computeProperties_irLocation": {
-			"type": "string",
-			"defaultValue": "AutoResolve"
+			"type": "string"
+		},
+		"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType": {
+			"type": "string"
+		},
+		"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount": {
+			"type": "int"
+		},
+		"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
+			"type": "int"
 		},
 		"containerUri": {
 			"type": "string",
@@ -44,6 +52,15 @@
 					},
 					"AzureIR_properties_typeProperties_computeProperties_irLocation": {
 						"value": "[parameters('AzureIR_properties_typeProperties_computeProperties_irLocation')]"
+					},
+					"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType": {
+						"value": "[parameters('AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType')]"
+					},
+					"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount": {
+						"value": "[parameters('AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount')]"
+					},
+					"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
+						"value": "[parameters('AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irTTL')]"
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"

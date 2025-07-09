@@ -8,8 +8,16 @@
 			"defaultValue": "rkzaibu4ig3ls"
 		},
 		"AzureIR_properties_typeProperties_computeProperties_irLocation": {
-			"type": "string",
-			"defaultValue": "AutoResolve"
+			"type": "string"
+		},
+		"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType": {
+			"type": "string"
+		},
+		"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount": {
+			"type": "int"
+		},
+		"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
+			"type": "int"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
@@ -30,9 +38,9 @@
 					"computeProperties": {
 						"location": "[parameters('AzureIR_properties_typeProperties_computeProperties_irLocation')]",
 						"dataFlowProperties": {
-							"computeType": "General",
-							"coreCount": 8,
-							"timeToLive": 10,
+							"computeType": "[parameters('AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType')]",
+							"coreCount": "[parameters('AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount')]",
+							"timeToLive": "[parameters('AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irTTL')]",
 							"cleanup": false,
 							"customProperties": []
 						}
