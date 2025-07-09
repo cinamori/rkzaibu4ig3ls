@@ -1,11 +1,10 @@
 {
 	"name": "AzureDataLakeStorage1",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "AzureBlobFS",
 		"typeProperties": {
-			"url": "https://test.dfs.core.windows.net/",
+			"url": "https://cistorage01.dfs.core.windows.net/",
 			"credential": {
 				"referenceName": "credential1",
 				"type": "CredentialReference"
@@ -15,5 +14,6 @@
 			"referenceName": "AzureIR",
 			"type": "IntegrationRuntimeReference"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
