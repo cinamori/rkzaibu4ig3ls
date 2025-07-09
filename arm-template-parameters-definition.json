@@ -27,10 +27,13 @@
         "properties": {
             "type": "Managed",
             "typeProperties": {
-                "dataFlowProperties": {
-                    "computeType": "=:irComputeType:string",
-                    "coreCount": "=:irCoreCount:int",
-                    "timeToLive": "=:irTTL:int"
+                "computeProperties": {
+                    "location": "-:irLocation:string",
+                    "dataFlowProperties": {
+                        "computeType": "-:irComputeType:string",
+                        "coreCount": "-:irCoreCount:int",
+                        "timeToLive": "-:irTTL:int"
+                    }
                 }
             }
         }
