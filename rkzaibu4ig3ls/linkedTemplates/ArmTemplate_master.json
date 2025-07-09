@@ -9,7 +9,11 @@
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://test.dfs.core.windows.net/"
+			"defaultValue": "https://cistorage01.dfs.core.windows.net/"
+		},
+		"AzureIR_properties_typeProperties_computeProperties_string": {
+			"type": "string",
+			"defaultValue": "AutoResolve"
 		},
 		"containerUri": {
 			"type": "string",
@@ -37,6 +41,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureIR_properties_typeProperties_computeProperties_string": {
+						"value": "[parameters('AzureIR_properties_typeProperties_computeProperties_string')]"
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
