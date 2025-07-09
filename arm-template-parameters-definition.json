@@ -47,15 +47,15 @@
                     "resourceId": "="
                 },
                 "computeProperties": {
-                    "location": "=irLocation:string",
-                    "nodeSize": "=irNodeSize:string",
-                    "numberOfNodes": "=irNodeCount:int",
-                    "maxParallelExecutionsPerNode": "=irMaxParallel:int"
+                    "location": "=:irLocation:string",
+                    "nodeSize": "=:irNodeSize:string",
+                    "numberOfNodes": "=:irNodeCount:int",
+                    "maxParallelExecutionsPerNode": "=:irMaxParallel:int"
                 },
                 "dataFlowProperties": {
-                    "computeType": "=irComputeType:string",
-                    "coreCount": "=irCoreCount:int",
-                    "timeToLive": "=irTTL:int"
+                    "computeType": "=:irComputeType:string",
+                    "coreCount": "=:irCoreCount:int",
+                    "timeToLive": "=:irTTL:int"
                 }
             }
         }
