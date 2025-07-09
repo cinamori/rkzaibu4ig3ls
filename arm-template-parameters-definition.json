@@ -126,6 +126,7 @@
     "Microsoft.DataFactory/factories/credentials": {
         "*": {
             "properties": {
+                "type": "ManagedIdentity",
                 "typeProperties": {
                     "resourceId": "-:resourceId:string"
                 }
