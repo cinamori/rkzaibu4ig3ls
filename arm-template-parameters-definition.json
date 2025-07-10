@@ -25,7 +25,7 @@
     "Microsoft.DataFactory/factories/pipelines": {},
     "Microsoft.DataFactory/factories/integrationRuntimes": {
         "properties": {
-            "type": "-:irType:string",
+            "type": "Managed",
             "typeProperties": {
                 "computeProperties": {
                     "location": "-:irLocation:string",
