@@ -20,6 +20,9 @@
 		"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
 			"value": ""
 		},
+		"credential1_properties_typeProperties_resourceId": {
+			"value": ""
+		},
 		"containerUri": {
 			"value": ""
 		},

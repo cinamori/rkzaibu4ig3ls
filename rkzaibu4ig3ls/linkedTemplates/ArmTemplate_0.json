@@ -19,6 +19,9 @@
 		"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
 			"type": "int"
 		},
+		"credential1_properties_typeProperties_resourceId": {
+			"type": "string"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://cistorage01.dfs.core.windows.net/"
@@ -56,7 +59,7 @@
 			"properties": {
 				"type": "ManagedIdentity",
 				"typeProperties": {
-					"resourceId": "/subscriptions/fb0d0c58-ffd3-4bb5-9349-fc515e660775/resourceGroups/adfrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/adf-user-mangedid-demo2"
+					"resourceId": "[parameters('credential1_properties_typeProperties_resourceId')]"
 				}
 			},
 			"dependsOn": []

@@ -23,6 +23,9 @@
 		"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
 			"type": "int"
 		},
+		"credential1_properties_typeProperties_resourceId": {
+			"type": "string"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "リンクされた ARM テンプレートを含むストレージ アカウントの URI"
@@ -61,6 +64,9 @@
 					},
 					"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
 						"value": "[parameters('AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irTTL')]"
+					},
+					"credential1_properties_typeProperties_resourceId": {
+						"value": "[parameters('credential1_properties_typeProperties_resourceId')]"
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
