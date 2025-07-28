@@ -23,6 +23,30 @@
 		"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
 			"type": "int"
 		},
+		"AzureManagedVnetIR1_properties_typeProperties_computeProperties_irLocation": {
+			"type": "string"
+		},
+		"AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType": {
+			"type": "string"
+		},
+		"AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount": {
+			"type": "int"
+		},
+		"AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
+			"type": "int"
+		},
+		"AzureManagedVnetIR2_properties_typeProperties_computeProperties_irLocation": {
+			"type": "string"
+		},
+		"AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType": {
+			"type": "string"
+		},
+		"AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount": {
+			"type": "int"
+		},
+		"AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
+			"type": "int"
+		},
 		"credential1_properties_typeProperties_resourceId": {
 			"type": "string"
 		},
@@ -70,6 +94,30 @@
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"AzureManagedVnetIR1_properties_typeProperties_computeProperties_irLocation": {
+						"value": "[parameters('AzureManagedVnetIR1_properties_typeProperties_computeProperties_irLocation')]"
+					},
+					"AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType": {
+						"value": "[parameters('AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType')]"
+					},
+					"AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount": {
+						"value": "[parameters('AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount')]"
+					},
+					"AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
+						"value": "[parameters('AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irTTL')]"
+					},
+					"AzureManagedVnetIR2_properties_typeProperties_computeProperties_irLocation": {
+						"value": "[parameters('AzureManagedVnetIR2_properties_typeProperties_computeProperties_irLocation')]"
+					},
+					"AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType": {
+						"value": "[parameters('AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType')]"
+					},
+					"AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount": {
+						"value": "[parameters('AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount')]"
+					},
+					"AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
+						"value": "[parameters('AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irTTL')]"
 					}
 				}
 			},

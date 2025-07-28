@@ -20,6 +20,30 @@
 		"AzureIR_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
 			"value": ""
 		},
+		"AzureManagedVnetIR1_properties_typeProperties_computeProperties_irLocation": {
+			"value": ""
+		},
+		"AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType": {
+			"value": ""
+		},
+		"AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount": {
+			"value": ""
+		},
+		"AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
+			"value": ""
+		},
+		"AzureManagedVnetIR2_properties_typeProperties_computeProperties_irLocation": {
+			"value": ""
+		},
+		"AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType": {
+			"value": ""
+		},
+		"AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount": {
+			"value": ""
+		},
+		"AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
+			"value": ""
+		},
 		"credential1_properties_typeProperties_resourceId": {
 			"value": ""
 		},

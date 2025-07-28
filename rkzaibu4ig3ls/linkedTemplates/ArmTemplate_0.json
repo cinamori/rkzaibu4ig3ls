@@ -25,6 +25,30 @@
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://cistorage01.dfs.core.windows.net/"
+		},
+		"AzureManagedVnetIR1_properties_typeProperties_computeProperties_irLocation": {
+			"type": "string"
+		},
+		"AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType": {
+			"type": "string"
+		},
+		"AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount": {
+			"type": "int"
+		},
+		"AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
+			"type": "int"
+		},
+		"AzureManagedVnetIR2_properties_typeProperties_computeProperties_irLocation": {
+			"type": "string"
+		},
+		"AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType": {
+			"type": "string"
+		},
+		"AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount": {
+			"type": "int"
+		},
+		"AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irTTL": {
+			"type": "int"
 		}
 	},
 	"variables": {
@@ -93,6 +117,70 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/integrationRuntimes/AzureIR')]",
 				"[concat(variables('factoryId'), '/credentials/credential1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureManagedVnetIR1')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "[parameters('AzureManagedVnetIR1_properties_typeProperties_computeProperties_irLocation')]",
+						"dataFlowProperties": {
+							"computeType": "[parameters('AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType')]",
+							"coreCount": "[parameters('AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount')]",
+							"timeToLive": "[parameters('AzureManagedVnetIR1_properties_typeProperties_computeProperties_dataFlowProperties_irTTL')]",
+							"cleanup": false,
+							"customProperties": []
+						},
+						"pipelineExternalComputeScaleProperties": {
+							"timeToLive": 10,
+							"numberOfPipelineNodes": 1,
+							"numberOfExternalNodes": 1
+						}
+					}
+				},
+				"managedVirtualNetwork": {
+					"type": "ManagedVirtualNetworkReference",
+					"referenceName": "default"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureManagedVnetIR2')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "[parameters('AzureManagedVnetIR2_properties_typeProperties_computeProperties_irLocation')]",
+						"dataFlowProperties": {
+							"computeType": "[parameters('AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irComputeType')]",
+							"coreCount": "[parameters('AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irCoreCount')]",
+							"timeToLive": "[parameters('AzureManagedVnetIR2_properties_typeProperties_computeProperties_dataFlowProperties_irTTL')]",
+							"cleanup": false,
+							"customProperties": []
+						},
+						"pipelineExternalComputeScaleProperties": {
+							"timeToLive": 60,
+							"numberOfPipelineNodes": 1,
+							"numberOfExternalNodes": 1
+						}
+					}
+				},
+				"managedVirtualNetwork": {
+					"type": "ManagedVirtualNetworkReference",
+					"referenceName": "default"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
 			]
 		},
 		{
@@ -400,9 +488,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "AzureManagedVnetIR1",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -415,7 +503,8 @@
 				"lastPublishTime": "2024-12-18T07:55:31Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/AzureManagedVnetIR1')]"
 			]
 		}
 	]
