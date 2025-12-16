@@ -1,0 +1,1033 @@
+{
+	"name": "202409_1st",
+	"properties": {
+		"activities": [
+			{
+				"name": "202409_1st_ADF1",
+				"description": "Tran側に業務バージョンを付与したのち、情報変換マスタをあてるところまでやる。\nパラメータはパイプラインパラメータを使うが、式にチェックはいれない。なぜなら、クラウドフローからは「’’」無のパラメータを使うから",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DELETE TRAN",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine",
+					"runConcurrently": true,
+					"continueOnError": true
+				}
+			},
+			{
+				"name": "SUCCESS",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "If Condition2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scripts": [
+						{
+							"parameters": [
+								{
+									"name": "OPEUNICODE",
+									"type": "String",
+									"value": {
+										"value": "@pipeline().parameters.PPL_OPUCODE",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "SOURCEID",
+									"type": "String",
+									"value": {
+										"value": "@pipeline().parameters.PPL_SOURCEID",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "FOLDERCLASS",
+									"type": "String",
+									"value": {
+										"value": "@pipeline().parameters.PPL_FOLDERCLASS",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "STATUSCHANGE",
+									"type": "String",
+									"value": "データ作成完了",
+									"direction": "Input"
+								},
+								{
+									"name": "INSERTTIMETRAN0",
+									"type": "Datetime",
+									"value": {
+										"value": "@addHours(utcnow(),9)",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "STATUSCODE",
+									"type": "String",
+									"value": "S2",
+									"direction": "Input"
+								}
+							],
+							"type": "Query",
+							"text": "UPDATE dbo.a01_SAVEDFILE\r\nSET \r\nSTATUS = @STATUSCHANGE,\r\nSTATUS_CD = @STATUSCODE,\r\nTRAN2FB = @INSERTTIMETRAN0\r\nWHERE \r\nOPEUNICODE = @OPEUNICODE\r\nAND SOURCEID = @SOURCEID\r\nAND FOLDER_CLASS = @FOLDERCLASS\r\n;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "FAILURE",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "If Condition2",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scripts": [
+						{
+							"parameters": [
+								{
+									"name": "OPEUNICODE",
+									"type": "String",
+									"value": {
+										"value": "@pipeline().parameters.PPL_OPUCODE",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "SOURCEID",
+									"type": "String",
+									"value": {
+										"value": "@pipeline().parameters.PPL_SOURCEID",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "FOLDERCLASS",
+									"type": "String",
+									"value": {
+										"value": "@pipeline().parameters.PPL_FOLDERCLASS",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "STATUSCHANGE",
+									"type": "String",
+									"value": "共通DF失敗_エラーメッセージ取得中",
+									"direction": "Input"
+								},
+								{
+									"name": "INSERTTIMETRAN0",
+									"type": "Datetime",
+									"value": {
+										"value": "@addHours(utcnow(),9)",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "STATUSCODE",
+									"type": "String",
+									"value": "G2",
+									"direction": "Input"
+								}
+							],
+							"type": "Query",
+							"text": "UPDATE dbo.a01_SAVEDFILE\r\nSET \r\nSTATUS = @STATUSCHANGE,\r\nSTATUS_CD = @STATUSCODE,\r\nTRAN2FB = @INSERTTIMETRAN0\r\nWHERE \r\nOPEUNICODE = @OPEUNICODE\r\nAND SOURCEID = @SOURCEID\r\nAND FOLDER_CLASS = @FOLDERCLASS\r\n;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "FAILURE_copy1",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "If Condition1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scripts": [
+						{
+							"parameters": [
+								{
+									"name": "OPEUNICODE",
+									"type": "String",
+									"value": {
+										"value": "@pipeline().parameters.PPL_OPUCODE",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "SOURCEID",
+									"type": "String",
+									"value": {
+										"value": "@pipeline().parameters.PPL_SOURCEID",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "FOLDERCLASS",
+									"type": "String",
+									"value": {
+										"value": "@pipeline().parameters.PPL_FOLDERCLASS",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "STATUSCHANGE",
+									"type": "String",
+									"value": "共通DF失敗_エラーメッセージ取得中",
+									"direction": "Input"
+								},
+								{
+									"name": "INSERTTIMETRAN0",
+									"type": "Datetime",
+									"value": {
+										"value": "@addHours(utcnow(),9)",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "STATUSCODE",
+									"type": "String",
+									"value": "G2",
+									"direction": "Input"
+								}
+							],
+							"type": "Query",
+							"text": "UPDATE dbo.a01_SAVEDFILE\r\nSET \r\nSTATUS = @STATUSCHANGE,\r\nSTATUS_CD = @STATUSCODE,\r\nTRAN2FB = @INSERTTIMETRAN0\r\nWHERE \r\nOPEUNICODE = @OPEUNICODE\r\nAND SOURCEID = @SOURCEID\r\nAND FOLDER_CLASS = @FOLDERCLASS\r\n;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "FAILURE_copy2",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "202409_1st_ADF1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scripts": [
+						{
+							"parameters": [
+								{
+									"name": "OPEUNICODE",
+									"type": "String",
+									"value": {
+										"value": "@pipeline().parameters.PPL_OPUCODE",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "SOURCEID",
+									"type": "String",
+									"value": {
+										"value": "@pipeline().parameters.PPL_SOURCEID",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "FOLDERCLASS",
+									"type": "String",
+									"value": {
+										"value": "@pipeline().parameters.PPL_FOLDERCLASS",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "STATUSCHANGE",
+									"type": "String",
+									"value": "共通DF失敗_エラーメッセージ取得中",
+									"direction": "Input"
+								},
+								{
+									"name": "INSERTTIMETRAN0",
+									"type": "Datetime",
+									"value": {
+										"value": "@addHours(utcnow(),9)",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "STATUSCODE",
+									"type": "String",
+									"value": "G2",
+									"direction": "Input"
+								}
+							],
+							"type": "Query",
+							"text": "UPDATE dbo.a01_SAVEDFILE\r\nSET \r\nSTATUS = @STATUSCHANGE,\r\nSTATUS_CD = @STATUSCODE,\r\nTRAN2FB = @INSERTTIMETRAN0\r\nWHERE \r\nOPEUNICODE = @OPEUNICODE\r\nAND SOURCEID = @SOURCEID\r\nAND FOLDER_CLASS = @FOLDERCLASS\r\n;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "FAILURE_copy2_copy1_copy1",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "DELETE TRAN",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scripts": [
+						{
+							"parameters": [
+								{
+									"name": "OPEUNICODE",
+									"type": "String",
+									"value": {
+										"value": "@pipeline().parameters.PPL_OPUCODE",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "SOURCEID",
+									"type": "String",
+									"value": {
+										"value": "@pipeline().parameters.PPL_SOURCEID",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "FOLDERCLASS",
+									"type": "String",
+									"value": {
+										"value": "@pipeline().parameters.PPL_FOLDERCLASS",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "STATUSCHANGE",
+									"type": "String",
+									"value": "共通DF失敗_エラーメッセージ取得中",
+									"direction": "Input"
+								},
+								{
+									"name": "INSERTTIMETRAN0",
+									"type": "Datetime",
+									"value": {
+										"value": "@addHours(utcnow(),9)",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								},
+								{
+									"name": "STATUSCODE",
+									"type": "String",
+									"value": "G2",
+									"direction": "Input"
+								}
+							],
+							"type": "Query",
+							"text": "UPDATE dbo.a01_SAVEDFILE\r\nSET \r\nSTATUS = @STATUSCHANGE,\r\nSTATUS_CD = @STATUSCODE,\r\nTRAN2FB = @INSERTTIMETRAN0\r\nWHERE \r\nOPEUNICODE = @OPEUNICODE\r\nAND SOURCEID = @SOURCEID\r\nAND FOLDER_CLASS = @FOLDERCLASS\r\n;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "DELETE TRAN",
+				"description": "AU900の時以外はDELETE TRANロジックを発動する",
+				"type": "IfCondition",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(substring(pipeline().parameters.PPL_SOURCEID, add(length(pipeline().parameters.PPL_SOURCEID), -4), 4), 'U900')",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "DeleteTran1",
+							"description": "Tranデータの削除",
+							"type": "Script",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.00:30:00",
+								"retry": 30,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"scripts": [
+									{
+										"parameters": [
+											{
+												"name": "SourceID",
+												"type": "String",
+												"value": {
+													"value": "@pipeline().parameters.PPL_SOURCEID",
+													"type": "Expression"
+												},
+												"direction": "Input"
+											},
+											{
+												"name": "FolderType",
+												"type": "String",
+												"value": {
+													"value": "@pipeline().parameters.PPL_FOLDERCLASS",
+													"type": "Expression"
+												},
+												"direction": "Input"
+											},
+											{
+												"name": "BatchSize",
+												"type": "Int16",
+												"value": "10000",
+												"direction": "Input"
+											}
+										],
+										"type": "Query",
+										"text": "WHILE (1 = 1)\nBEGIN\n    DELETE TOP (@BatchSize)\n    FROM dbo.a03_ADF_1st_Tran1\n    WHERE (@SourceID IS NULL OR [ソース判別ID] = @SourceID)\n      AND (@FolderType IS NULL OR [フォルダ区分] = @FolderType);\n\n    IF @@ROWCOUNT = 0 \n        BREAK;\nEND;\n"
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00",
+								"logSettings": {
+									"logDestination": "ActivityOutput"
+								}
+							}
+						},
+						{
+							"name": "DeleteError1_Maedashi",
+							"description": "エラーデータの削除",
+							"type": "Script",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.00:30:00",
+								"retry": 30,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"scripts": [
+									{
+										"parameters": [
+											{
+												"name": "SourceID",
+												"type": "String",
+												"value": {
+													"value": "@pipeline().parameters.PPL_SOURCEID",
+													"type": "Expression"
+												},
+												"direction": "Input"
+											},
+											{
+												"name": "FolderType",
+												"type": "String",
+												"value": {
+													"value": "@pipeline().parameters.PPL_FOLDERCLASS",
+													"type": "Expression"
+												},
+												"direction": "Input"
+											},
+											{
+												"name": "BatchSize",
+												"type": "Int16",
+												"value": "10000",
+												"direction": "Input"
+											}
+										],
+										"type": "Query",
+										"text": "WHILE (1 = 1)\nBEGIN\n    DELETE TOP (@BatchSize)\n    FROM dbo.a03_ADF_1st_Error1_ConverInfo\n    WHERE (@SourceID IS NULL OR [ソース判別ID] = @SourceID)\n      AND (@FolderType IS NULL OR [フォルダ区分] = @FolderType);\n\n    IF @@ROWCOUNT = 0 BREAK;\nEND;\n"
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00",
+								"logSettings": {
+									"logDestination": "ActivityOutput"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "DELETE TRAN_copy1",
+				"description": "AU900の時以外はDELETE TRANロジックを発動する",
+				"type": "IfCondition",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(substring(pipeline().parameters.PPL_SOURCEID, add(length(pipeline().parameters.PPL_SOURCEID), -4), 4), 'U900')",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "DeleteTran2_copy1",
+							"description": "Tranデータの削除",
+							"type": "Script",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.00:30:00",
+								"retry": 30,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"scripts": [
+									{
+										"parameters": [
+											{
+												"name": "SourceID",
+												"type": "String",
+												"value": {
+													"value": "@pipeline().parameters.PPL_SOURCEID",
+													"type": "Expression"
+												},
+												"direction": "Input"
+											},
+											{
+												"name": "FolderType",
+												"type": "String",
+												"value": {
+													"value": "@pipeline().parameters.PPL_FOLDERCLASS",
+													"type": "Expression"
+												},
+												"direction": "Input"
+											},
+											{
+												"name": "BatchSize",
+												"type": "Int16",
+												"value": "10000",
+												"direction": "Input"
+											}
+										],
+										"type": "Query",
+										"text": "WHILE (1 = 1)\nBEGIN\n    DELETE TOP (@BatchSize)\n    FROM dbo.a03_ADF_1st_Tran2\n    WHERE (@SourceID IS NULL OR [ソース判別ID] = @SourceID)\n      AND (@FolderType IS NULL OR [フォルダ区分] = @FolderType);\n\n    IF @@ROWCOUNT = 0 \n        BREAK;\nEND;\n"
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00",
+								"logSettings": {
+									"logDestination": "ActivityOutput"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "DELETE TRAN_copy2",
+				"description": "AU900の時以外はDELETE TRANロジックを発動する",
+				"type": "IfCondition",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(substring(pipeline().parameters.PPL_SOURCEID, add(length(pipeline().parameters.PPL_SOURCEID), -4), 4), 'U900')",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "a03_ADF_1st_Tran3",
+							"description": "Tranデータの削除",
+							"type": "Script",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.00:30:00",
+								"retry": 30,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"scripts": [
+									{
+										"parameters": [
+											{
+												"name": "SourceID",
+												"type": "String",
+												"value": {
+													"value": "@pipeline().parameters.PPL_SOURCEID",
+													"type": "Expression"
+												},
+												"direction": "Input"
+											},
+											{
+												"name": "FolderType",
+												"type": "String",
+												"value": {
+													"value": "@pipeline().parameters.PPL_FOLDERCLASS",
+													"type": "Expression"
+												},
+												"direction": "Input"
+											},
+											{
+												"name": "BatchSize",
+												"type": "Int16",
+												"value": "10000",
+												"direction": "Input"
+											}
+										],
+										"type": "Query",
+										"text": "WHILE (1 = 1)\nBEGIN\n    DELETE TOP (@BatchSize)\n    FROM dbo.a03_ADF_1st_Tran3\n    WHERE (@SourceID IS NULL OR [ソース判別ID] = @SourceID)\n      AND (@FolderType IS NULL OR [フォルダ区分] = @FolderType);\n\n\nIF @@ROWCOUNT = 0 \n    BREAK;\n\nEND;"
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00",
+								"logSettings": {
+									"logDestination": "ActivityOutput"
+								}
+							}
+						},
+						{
+							"name": "a03_ADF_1st_Tran5",
+							"description": "Tranデータの削除",
+							"type": "Script",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.00:30:00",
+								"retry": 30,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"scripts": [
+									{
+										"parameters": [
+											{
+												"name": "SourceID",
+												"type": "String",
+												"value": {
+													"value": "@pipeline().parameters.PPL_SOURCEID",
+													"type": "Expression"
+												},
+												"direction": "Input"
+											},
+											{
+												"name": "FolderType",
+												"type": "String",
+												"value": {
+													"value": "@pipeline().parameters.PPL_FOLDERCLASS",
+													"type": "Expression"
+												},
+												"direction": "Input"
+											},
+											{
+												"name": "BatchSize",
+												"type": "Int16",
+												"value": "10000",
+												"direction": "Input"
+											}
+										],
+										"type": "Query",
+										"text": "WHILE (1 = 1)\nBEGIN\n    DELETE TOP (@BatchSize)\n    FROM dbo.a03_ADF_1st_Tran5\n    WHERE (@SourceID IS NULL OR [ソース判別ID] = @SourceID)\n      AND (@FolderType IS NULL OR [フォルダ区分] = @FolderType);\n\n    IF @@ROWCOUNT = 0 \n        BREAK;\nEND;\n"
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00",
+								"logSettings": {
+									"logDestination": "ActivityOutput"
+								}
+							}
+						},
+						{
+							"name": "a03_ADF_1st_Error2_CheckMaedashi",
+							"description": "エラーデータの削除",
+							"type": "Script",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.00:30:00",
+								"retry": 30,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"scripts": [
+									{
+										"parameters": [
+											{
+												"name": "SourceID",
+												"type": "String",
+												"value": {
+													"value": "@pipeline().parameters.PPL_SOURCEID",
+													"type": "Expression"
+												},
+												"direction": "Input"
+											},
+											{
+												"name": "FolderType",
+												"type": "String",
+												"value": {
+													"value": "@pipeline().parameters.PPL_FOLDERCLASS",
+													"type": "Expression"
+												},
+												"direction": "Input"
+											},
+											{
+												"name": "BatchSize",
+												"type": "Int16",
+												"value": "10000",
+												"direction": "Input"
+											}
+										],
+										"type": "Query",
+										"text": "WHILE (1 = 1)\nBEGIN\n    DELETE TOP (@BatchSize)\n    FROM dbo.a03_ADF_1st_Error2_CheckMaedashi\n    WHERE (@SourceID IS NULL OR [ソース判別ID] = @SourceID)\n      AND (@FolderType IS NULL OR [フォルダ区分] = @FolderType);\n\n    IF @@ROWCOUNT = 0 BREAK;\nEND;"
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00",
+								"logSettings": {
+									"logDestination": "ActivityOutput"
+								}
+							}
+						},
+						{
+							"name": "a03_ADF_1st_ADF5_E_Amount_calc",
+							"description": "エラーデータの削除",
+							"type": "Script",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.00:30:00",
+								"retry": 30,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"scripts": [
+									{
+										"parameters": [
+											{
+												"name": "SourceID",
+												"type": "String",
+												"value": {
+													"value": "@pipeline().parameters.PPL_SOURCEID",
+													"type": "Expression"
+												},
+												"direction": "Input"
+											},
+											{
+												"name": "FolderType",
+												"type": "String",
+												"value": {
+													"value": "@pipeline().parameters.PPL_FOLDERCLASS",
+													"type": "Expression"
+												},
+												"direction": "Input"
+											},
+											{
+												"name": "BatchSize",
+												"type": "Int16",
+												"value": "10000",
+												"direction": "Input"
+											}
+										],
+										"type": "Query",
+										"text": "WHILE (1 = 1)\nBEGIN\n    DELETE TOP (@BatchSize)\n    FROM dbo.a03_ADF_1st_ADF5_E_Amount_calc\n    WHERE (@SourceID IS NULL OR [ソース判別ID] = @SourceID)\n      AND (@FolderType IS NULL OR [フォルダ区分] = @FolderType);\n\n    IF @@ROWCOUNT = 0 BREAK;\nEND;"
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00",
+								"logSettings": {
+									"logDestination": "ActivityOutput"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "202409_1st_ADF1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "DELETE TRAN_copy1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@and(\n    not(empty(pipeline().parameters.PPL_SOURCEID)),\n    contains(\n        'G000|G001|G021',\n        substring(\n            toUpper(pipeline().parameters.PPL_SOURCEID),\n            sub(length(pipeline().parameters.PPL_SOURCEID), 4),\n            4\n        )\n    )\n)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "202409_1st_ADF2",
+							"description": "旧ADF3~7で発生するエラーチェックの前出しを行うために、M/F/CのマスタIDを取得する",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"compute": {
+									"coreCount": 8,
+									"computeType": "General"
+								},
+								"traceLevel": "Fine",
+								"runConcurrently": true,
+								"continueOnError": true
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "202409_1st_ADF2_GenOrb",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"compute": {
+									"coreCount": 8,
+									"computeType": "General"
+								},
+								"traceLevel": "Fine"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "If Condition2",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "DELETE TRAN_copy2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "If Condition1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@and(\n    not(empty(pipeline().parameters.PPL_SOURCEID)),\n    contains(\n        'G000|G001|G021',\n        substring(\n            toUpper(pipeline().parameters.PPL_SOURCEID),\n            sub(length(pipeline().parameters.PPL_SOURCEID), 4),\n            4\n        )\n    )\n)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "202409_1st_ADF3",
+							"description": "MFC,M,F,C関連のマスタチェック",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"compute": {
+									"coreCount": 8,
+									"computeType": "General"
+								},
+								"traceLevel": "Fine",
+								"runConcurrently": true,
+								"continueOnError": true
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "202409_1st_ADF3_GenOrb",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"compute": {
+									"coreCount": 8,
+									"computeType": "General"
+								},
+								"traceLevel": "Fine"
+							}
+						}
+					]
+				}
+			}
+		],
+		"concurrency": 5,
+		"parameters": {
+			"PPL_OPUCODE": {
+				"type": "string",
+				"defaultValue": "OPU05001"
+			},
+			"PPL_SOURCEID": {
+				"type": "string",
+				"defaultValue": "FU000"
+			},
+			"PPL_FOLDERCLASS": {
+				"type": "string",
+				"defaultValue": "OPU05001_2025_6月事前ver1_202506_202603"
+			},
+			"PPL_SCU_CODE": {
+				"type": "string",
+				"defaultValue": "00021885"
+			}
+		},
+		"variables": {
+			"FILEID": {
+				"type": "String"
+			},
+			"BusinessCategory": {
+				"type": "String"
+			},
+			"SIDisnull": {
+				"type": "String",
+				"defaultValue": "0"
+			},
+			"FIDisnull": {
+				"type": "String",
+				"defaultValue": "0"
+			},
+			"CASEJOIN": {
+				"type": "String",
+				"defaultValue": "00"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-01-30T00:28:15Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
