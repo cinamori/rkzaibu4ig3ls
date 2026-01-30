@@ -7,6 +7,10 @@
 			"metadata": "データ ファクトリ名",
 			"defaultValue": "rkzaibu4ig3ls"
 		},
+		"CosmosDbNoSql1_connectionString": {
+			"type": "secureString",
+			"metadata": "'CosmosDbNoSql1' の 'connectionString' のセキュリティで保護された文字列"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://cistorage01.dfs.core.windows.net/"
@@ -76,6 +80,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"CosmosDbNoSql1_connectionString": {
+						"value": "[parameters('CosmosDbNoSql1_connectionString')]"
 					},
 					"AzureIR_properties_typeProperties_computeProperties_irLocation": {
 						"value": "[parameters('AzureIR_properties_typeProperties_computeProperties_irLocation')]"

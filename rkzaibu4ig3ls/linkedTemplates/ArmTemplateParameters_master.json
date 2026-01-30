@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "rkzaibu4ig3ls"
 		},
+		"CosmosDbNoSql1_connectionString": {
+			"value": ""
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://cistorage01.dfs.core.windows.net/"
 		},
